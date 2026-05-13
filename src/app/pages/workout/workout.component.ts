@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
@@ -8,6 +8,9 @@ import { Exercise } from '../../models/exercise.model';
 import { ExerciseLog, SetLog, WorkoutLog } from '../../models/workout-log.model';
 
 type WorkoutPhase = 'idle' | 'countdown' | 'active' | 'rest' | 'session-rest' | 'done';
+
+const CIRCLE_RADIUS = 50;
+const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 
 @Component({
   selector: 'app-workout',
@@ -22,6 +25,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   currentSetIndex = 0;
   phase: WorkoutPhase = 'idle';
   countdownValue = 0;
+  countdownTotal = 0;
+  readonly circumference = CIRCUMFERENCE;
   setStartTime = 0;
   exerciseLogs: ExerciseLog[] = [];
   currentSetLogs: SetLog[] = [];
@@ -33,7 +38,9 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private storage: StorageService,
-    private audio: AudioService
+    private audio: AudioService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -113,9 +120,15 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     this.setStartTime = Date.now();
   }
 
+  get dashOffset(): number {
+    if (this.countdownTotal === 0) return 0;
+    return CIRCUMFERENCE * (1 - this.countdownValue / this.countdownTotal);
+  }
+
   private startCountdown(seconds: number, onDone: () => void, phaseOverride?: WorkoutPhase): void {
     this.clearTimer();
     this.countdownValue = seconds;
+    this.countdownTotal = seconds;
     this.phase = phaseOverride ?? 'countdown';
 
     if (seconds === 0) {
@@ -123,16 +136,21 @@ export class WorkoutComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.timer = setInterval(() => {
-      this.countdownValue--;
-      if (this.countdownValue <= 3 && this.countdownValue > 0) {
-        this.audio.playBeep(880, 0.12);
-      }
-      if (this.countdownValue === 0) {
-        this.clearTimer();
-        onDone();
-      }
-    }, 1000);
+    this.ngZone.runOutsideAngular(() => {
+      this.timer = setInterval(() => {
+        this.ngZone.run(() => {
+          this.countdownValue--;
+          if (this.countdownValue <= 3 && this.countdownValue > 0) {
+            this.audio.playBeep(880, 0.12);
+          }
+          if (this.countdownValue === 0) {
+            this.clearTimer();
+            onDone();
+          }
+          this.cdr.markForCheck();
+        });
+      }, 1000);
+    });
   }
 
   private clearTimer(): void {

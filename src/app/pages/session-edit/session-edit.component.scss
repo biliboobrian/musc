@@ -155,10 +155,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-
-  @media (min-width: 400px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .btn-add-exercise {

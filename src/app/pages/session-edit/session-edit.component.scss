@@ -20,6 +20,7 @@
 .btn-back {
   width: 36px;
   height: 36px;
+  padding: 0;
   border: 1px solid #ff8c00;
   border-radius: 8px;
   background: transparent;
@@ -28,9 +29,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
   flex-shrink: 0;
 
-  svg { width: 20px; height: 20px; }
+  svg { width: 20px; height: 20px; display: block; flex-shrink: 0; }
 }
 
 .card {

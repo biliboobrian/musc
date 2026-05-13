@@ -41,13 +41,23 @@
 
   <!-- COUNTDOWN before first set -->
   <div class="action-zone" *ngIf="phase === 'countdown'">
-    <div class="countdown-ring" [class.urgent]="countdownValue <= 3">
-      <span class="countdown-value">{{ countdownValue }}</span>
+    <div class="svg-countdown-wrap">
+      <svg class="svg-countdown" viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="progress"
+          cx="60" cy="60" r="50"
+          [style.stroke-dasharray]="circumference"
+          [style.stroke-dashoffset]="dashOffset"
+          [class.urgent]="countdownValue <= 3"/>
+      </svg>
+      <div class="countdown-center" [class.urgent]="countdownValue <= 3">
+        {{ countdownValue }}
+      </div>
     </div>
     <p class="action-hint">Préparez-vous !</p>
   </div>
 
-  <!-- ACTIVE: set in progress -->
+  <!-- ACTIVE: set in progress → big STOP button -->
   <div class="action-zone" *ngIf="phase === 'active'">
     <button class="btn-stop" (click)="pressStop()">
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -59,16 +69,36 @@
 
   <!-- REST between sets -->
   <div class="action-zone" *ngIf="phase === 'rest'">
-    <div class="countdown-ring rest" [class.urgent]="countdownValue <= 3">
-      <span class="countdown-value">{{ countdownValue }}</span>
+    <div class="svg-countdown-wrap">
+      <svg class="svg-countdown" viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="progress rest-color"
+          cx="60" cy="60" r="50"
+          [style.stroke-dasharray]="circumference"
+          [style.stroke-dashoffset]="dashOffset"
+          [class.urgent]="countdownValue <= 3"/>
+      </svg>
+      <div class="countdown-center" [class.urgent]="countdownValue <= 3">
+        {{ countdownValue }}
+      </div>
     </div>
     <p class="action-hint">Pause — série {{ currentSetIndex + 1 }} dans {{ formatTime(countdownValue) }}</p>
   </div>
 
   <!-- SESSION REST between exercises -->
   <div class="action-zone" *ngIf="phase === 'session-rest'">
-    <div class="countdown-ring session-rest" [class.urgent]="countdownValue <= 3">
-      <span class="countdown-value">{{ countdownValue }}</span>
+    <div class="svg-countdown-wrap">
+      <svg class="svg-countdown" viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="50"/>
+        <circle class="progress session-rest-color"
+          cx="60" cy="60" r="50"
+          [style.stroke-dasharray]="circumference"
+          [style.stroke-dashoffset]="dashOffset"
+          [class.urgent]="countdownValue <= 3"/>
+      </svg>
+      <div class="countdown-center" [class.urgent]="countdownValue <= 3">
+        {{ countdownValue }}
+      </div>
     </div>
     <p class="action-hint">Changement d'exercice dans {{ formatTime(countdownValue) }}</p>
     <p class="action-hint-sub" *ngIf="currentExerciseIndex + 1 < session.exercises.length">

@@ -28,6 +28,7 @@
   line-height: 1;
   cursor: pointer;
   display: flex;
+  padding-bottom: 6px;
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
@@ -60,6 +61,7 @@
   color: #ff8c00;
   font-size: 3rem;
   line-height: 1;
+  padding-bottom: 6px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -144,19 +146,25 @@
   &.btn-history {
     border-color: #888;
     color: #888;
-    &:hover { background: rgba(255,255,255,0.08); }
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
   }
 
   &.btn-edit {
     border-color: #ff8c00;
     color: #ff8c00;
-    &:hover { background: rgba(255,140,0,0.12); }
+    &:hover {
+      background: rgba(255, 140, 0, 0.12);
+    }
   }
 
   &.btn-play {
     border-color: #ff8c00;
     background: #ff8c00;
     color: #1a1a1a;
-    &:hover { background: #e07b00; }
+    &:hover {
+      background: #e07b00;
+    }
   }
 }

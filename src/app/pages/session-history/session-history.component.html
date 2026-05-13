@@ -1,0 +1,48 @@
+<div class="page">
+  <header class="page-header">
+    <button class="btn-back" (click)="back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1>Historique — {{ sessionName }}</h1>
+  </header>
+
+  <div class="empty-state" *ngIf="logs.length === 0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.5">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+    </svg>
+    <p>Aucune séance réalisée pour l'instant.</p>
+  </div>
+
+  <div class="log-list" *ngIf="logs.length > 0">
+    <div class="log-card" *ngFor="let log of logs" [class.expanded]="expandedLogId === log.id">
+      <div class="log-header" (click)="toggleLog(log.id)">
+        <div class="log-meta">
+          <span class="log-date">{{ formatDate(log.date) }}</span>
+          <span class="log-total">{{ formatDuration(log.totalDurationSeconds) }}</span>
+        </div>
+        <span class="log-toggle">{{ expandedLogId === log.id ? '▲' : '▼' }}</span>
+      </div>
+
+      <div class="log-body" *ngIf="expandedLogId === log.id">
+        <div class="ex-summary" *ngFor="let exLog of log.exerciseLogs">
+          <div class="ex-header">
+            <span class="ex-name">{{ exLog.exerciseName }}</span>
+            <span class="ex-weight">{{ exLog.weight }} kg</span>
+          </div>
+          <div class="sets-rows">
+            <div class="set-row" *ngFor="let set of exLog.sets">
+              <span class="set-label">Série {{ set.setNumber }}</span>
+              <span class="set-val">{{ formatDuration(set.durationSeconds) }}</span>
+            </div>
+            <div class="set-row avg-row">
+              <span class="set-label">Moy. / série</span>
+              <span class="set-val">{{ formatDuration(exLog.averageDurationSeconds) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="page" *ngIf="log">
+  <header class="page-header">
+    <h1>Séance terminée !</h1>
+  </header>
+
+  <div class="session-meta">
+    <p class="session-name">{{ log.sessionName }}</p>
+    <p class="session-date">{{ formatDate(log.date) }}</p>
+    <p class="total-duration">Durée totale : {{ formatDuration(log.totalDurationSeconds) }}</p>
+  </div>
+
+  <section class="summary-section">
+    <h2>Récapitulatif</h2>
+    <div class="exercise-summary" *ngFor="let exLog of log.exerciseLogs">
+      <div class="ex-header">
+        <span class="ex-name">{{ exLog.exerciseName }}</span>
+        <span class="ex-weight">{{ exLog.weight }} kg</span>
+      </div>
+      <div class="sets-grid">
+        <div class="set-row" *ngFor="let set of exLog.sets">
+          <span class="set-label">Série {{ set.setNumber }}</span>
+          <span class="set-duration">{{ formatDuration(set.durationSeconds) }}</span>
+        </div>
+        <div class="set-row average">
+          <span class="set-label">Moyenne</span>
+          <span class="set-duration">{{ formatDuration(exLog.averageDurationSeconds) }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <button class="btn-home" (click)="goHome()">Retour aux séances</button>
+</div>

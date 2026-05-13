@@ -1,0 +1,159 @@
+.page {
+  padding: 20px 16px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 1.2rem;
+    color: #ff8c00;
+    margin: 0;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.btn-back {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ff8c00;
+  border-radius: 8px;
+  background: transparent;
+  color: #ff8c00;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { width: 20px; height: 20px; }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 16px;
+
+  svg { width: 60px; height: 60px; }
+
+  p { color: #666; font-size: 0.95rem; }
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log-card {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+
+  &.expanded { border-color: #ff8c00; }
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.log-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.log-date {
+  color: #f0f0f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.log-total {
+  color: #ff8c00;
+  font-size: 0.82rem;
+}
+
+.log-toggle {
+  color: #888;
+  font-size: 0.75rem;
+}
+
+.log-body {
+  border-top: 1px solid #333;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ex-summary {}
+
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ex-name {
+  color: #e0e0e0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.ex-weight {
+  color: #ff8c00;
+  font-size: 0.88rem;
+}
+
+.sets-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.set-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid #333;
+
+  &:last-child { border-bottom: none; }
+
+  &.avg-row {
+    border-top: 1px solid #3a3a3a;
+    margin-top: 4px;
+    padding-top: 8px;
+
+    .set-label { color: #ff8c00; }
+    .set-val { color: #ff8c00; }
+  }
+}
+
+.set-label {
+  color: #888;
+  font-size: 0.82rem;
+}
+
+.set-val {
+  color: #ccc;
+  font-size: 0.82rem;
+}

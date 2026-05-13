@@ -1,0 +1,128 @@
+.page {
+  padding: 20px 16px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 1.8rem;
+    color: #ff8c00;
+    margin: 0;
+  }
+}
+
+.session-meta {
+  text-align: center;
+  margin-bottom: 28px;
+
+  .session-name {
+    color: #f0f0f0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .session-date {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0 0 8px;
+  }
+
+  .total-duration {
+    color: #ff8c00;
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.summary-section {
+  h2 {
+    color: #ff8c00;
+    font-size: 1.05rem;
+    margin: 0 0 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+.exercise-summary {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ex-name {
+  color: #f0f0f0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.ex-weight {
+  color: #ff8c00;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.sets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.set-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+
+  &:last-child { border-bottom: none; }
+
+  &.average {
+    border-top: 1px solid #444;
+    margin-top: 4px;
+    padding-top: 10px;
+
+    .set-label { color: #ff8c00; font-weight: 600; }
+    .set-duration { color: #ff8c00; font-weight: 600; }
+  }
+}
+
+.set-label {
+  color: #888;
+  font-size: 0.88rem;
+}
+
+.set-duration {
+  color: #f0f0f0;
+  font-size: 0.88rem;
+}
+
+.btn-home {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: 14px;
+  background: #ff8c00;
+  border: none;
+  border-radius: 10px;
+  color: #1a1a1a;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover { background: #e07b00; }
+}

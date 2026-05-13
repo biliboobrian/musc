@@ -1,0 +1,78 @@
+<div class="page" *ngIf="session">
+  <header class="page-header">
+    <button class="btn-back" (click)="back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1>{{ session.name }}</h1>
+  </header>
+
+  <div class="exercise-card">
+    <div class="exercise-index">
+      Exercice {{ currentExerciseIndex + 1 }} / {{ session.exercises.length }}
+    </div>
+    <h2 class="exercise-name">{{ currentExercise.name }}</h2>
+    <div class="exercise-stats">
+      <div class="stat">
+        <span class="stat-label">Séries</span>
+        <span class="stat-value">{{ setsLabel }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Reps</span>
+        <span class="stat-value">{{ currentExercise.reps }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Poids</span>
+        <span class="stat-value">{{ currentExercise.weight }} kg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDLE: ready to start next set -->
+  <div class="action-zone" *ngIf="phase === 'idle'">
+    <button class="btn-play" (click)="pressPlay()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+    </button>
+    <p class="action-hint">Prêt pour la série {{ currentSetIndex + 1 }}</p>
+  </div>
+
+  <!-- COUNTDOWN before first set -->
+  <div class="action-zone" *ngIf="phase === 'countdown'">
+    <div class="countdown-ring" [class.urgent]="countdownValue <= 3">
+      <span class="countdown-value">{{ countdownValue }}</span>
+    </div>
+    <p class="action-hint">Préparez-vous !</p>
+  </div>
+
+  <!-- ACTIVE: set in progress -->
+  <div class="action-zone" *ngIf="phase === 'active'">
+    <button class="btn-stop" (click)="pressStop()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+      </svg>
+    </button>
+    <p class="action-hint">Série {{ currentSetIndex + 1 }} en cours…</p>
+  </div>
+
+  <!-- REST between sets -->
+  <div class="action-zone" *ngIf="phase === 'rest'">
+    <div class="countdown-ring rest" [class.urgent]="countdownValue <= 3">
+      <span class="countdown-value">{{ countdownValue }}</span>
+    </div>
+    <p class="action-hint">Pause — série {{ currentSetIndex + 1 }} dans {{ formatTime(countdownValue) }}</p>
+  </div>
+
+  <!-- SESSION REST between exercises -->
+  <div class="action-zone" *ngIf="phase === 'session-rest'">
+    <div class="countdown-ring session-rest" [class.urgent]="countdownValue <= 3">
+      <span class="countdown-value">{{ countdownValue }}</span>
+    </div>
+    <p class="action-hint">Changement d'exercice dans {{ formatTime(countdownValue) }}</p>
+    <p class="action-hint-sub" *ngIf="currentExerciseIndex + 1 < session.exercises.length">
+      Prochain : {{ session.exercises[currentExerciseIndex + 1].name }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="page">
+  <header class="page-header">
+    <button class="btn-back" (click)="back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <h1>{{ isNew ? 'Nouvelle séance' : 'Modifier la séance' }}</h1>
+  </header>
+
+  <section class="card">
+    <div class="field">
+      <label>Nom de la séance</label>
+      <input type="text" [(ngModel)]="session.name" placeholder="ex: Push Day" />
+    </div>
+    <div class="field">
+      <label>Pause entre exercices (secondes)</label>
+      <input type="number" [(ngModel)]="session.restBetweenExercises" min="0" />
+    </div>
+  </section>
+
+  <section class="exercises-section">
+    <h2>Exercices</h2>
+    <div class="exercise-card" *ngFor="let exercise of session.exercises; let i = index; trackBy: trackByIndex">
+      <div class="exercise-header">
+        <span class="exercise-number">{{ i + 1 }}</span>
+        <div class="exercise-order">
+          <button class="btn-order" (click)="moveUp(i)" [disabled]="i === 0">▲</button>
+          <button class="btn-order" (click)="moveDown(i)" [disabled]="i === session.exercises.length - 1">▼</button>
+        </div>
+        <button class="btn-remove" (click)="removeExercise(i)">✕</button>
+      </div>
+      <div class="field">
+        <label>Nom de l'exercice</label>
+        <input type="text" [(ngModel)]="exercise.name" placeholder="ex: Développé couché" />
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <label>Poids (kg)</label>
+          <input type="number" [(ngModel)]="exercise.weight" min="0" step="0.5" />
+        </div>
+        <div class="field">
+          <label>Séries</label>
+          <input type="number" [(ngModel)]="exercise.sets" min="1" />
+        </div>
+        <div class="field">
+          <label>Reps</label>
+          <input type="number" [(ngModel)]="exercise.reps" min="1" />
+        </div>
+        <div class="field">
+          <label>Pause (s)</label>
+          <input type="number" [(ngModel)]="exercise.restTime" min="0" />
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-add-exercise" (click)="addExercise()">+ Ajouter un exercice</button>
+  </section>
+
+  <div class="footer-actions">
+    <button class="btn-delete" (click)="confirmDelete()" *ngIf="!isNew">Supprimer</button>
+    <button class="btn-save" (click)="save()" [disabled]="!session.name.trim()">Sauvegarder</button>
+  </div>
+</div>
+
+<app-confirm-dialog
+  [visible]="showDeleteDialog"
+  message="Supprimer la séance « {{ session.name }} » ? Cette action est irréversible."
+  (confirm)="doDelete()"
+  (cancel)="cancelDelete()">
+</app-confirm-dialog>

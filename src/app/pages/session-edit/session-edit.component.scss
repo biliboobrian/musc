@@ -1,0 +1,216 @@
+.page {
+  padding: 20px 16px 100px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 1.4rem;
+    color: #ff8c00;
+    margin: 0;
+  }
+}
+
+.btn-back {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ff8c00;
+  border-radius: 8px;
+  background: transparent;
+  color: #ff8c00;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { width: 20px; height: 20px; }
+}
+
+.card {
+  background: #2a2a2a;
+  border: 1px solid #ff8c00;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+
+  &:last-child { margin-bottom: 0; }
+
+  label {
+    color: #ff8c00;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  input {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #f0f0f0;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus { border-color: #ff8c00; }
+  }
+}
+
+.exercises-section {
+  h2 {
+    color: #ff8c00;
+    font-size: 1.1rem;
+    margin: 0 0 14px;
+  }
+}
+
+.exercise-card {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+
+  &:hover { border-color: #ff8c00; }
+}
+
+.exercise-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.exercise-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #ff8c00;
+  color: #ff8c00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.exercise-order {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-order {
+  background: transparent;
+  border: 1px solid #555;
+  color: #888;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled { opacity: 0.3; cursor: default; }
+  &:not(:disabled):hover { border-color: #ff8c00; color: #ff8c00; }
+}
+
+.btn-remove {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover { background: rgba(192, 57, 43, 0.15); }
+}
+
+.fields-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  @media (min-width: 400px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.btn-add-exercise {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 2px dashed #ff8c00;
+  border-radius: 10px;
+  color: #ff8c00;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255, 140, 0, 0.08); }
+}
+
+.footer-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #1a1a1a;
+  border-top: 1px solid #333;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.btn-delete {
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid #c0392b;
+  border-radius: 8px;
+  color: #c0392b;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  &:hover { background: rgba(192, 57, 43, 0.15); }
+}
+
+.btn-save {
+  flex: 1;
+  padding: 12px;
+  background: #ff8c00;
+  border: none;
+  border-radius: 8px;
+  color: #1a1a1a;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:not(:disabled):hover { background: #e07b00; }
+}

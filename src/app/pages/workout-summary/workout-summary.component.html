@@ -14,11 +14,12 @@
     <div class="exercise-summary" *ngFor="let exLog of log.exerciseLogs">
       <div class="ex-header">
         <span class="ex-name">{{ exLog.exerciseName }}</span>
-        <span class="ex-weight">{{ exLog.weight }} kg</span>
       </div>
       <div class="sets-grid">
         <div class="set-row" *ngFor="let set of exLog.sets">
           <span class="set-label">Série {{ set.setNumber }}</span>
+          <span class="set-weight">{{ set.weight }} kg</span>
+          <span class="set-reps">{{ set.reps }} reps</span>
           <span class="set-duration">{{ formatDuration(set.durationSeconds) }}</span>
         </div>
         <div class="set-row average">

@@ -1,12 +1,13 @@
 export interface SetLog {
   setNumber: number;
   durationSeconds: number;
+  weight: number;
+  reps: number;
 }
 
 export interface ExerciseLog {
   exerciseId: string;
   exerciseName: string;
-  weight: number;
   sets: SetLog[];
   averageDurationSeconds: number;
 }

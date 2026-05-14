@@ -18,19 +18,21 @@
         <span class="stat-label">Séries</span>
         <span class="stat-value">{{ setsLabel }}</span>
       </div>
-      <div class="stat">
-        <span class="stat-label">Reps</span>
-        <span class="stat-value">{{ currentExercise.reps }}</span>
-      </div>
-      <div class="stat">
-        <span class="stat-label">Poids</span>
-        <span class="stat-value">{{ currentExercise.weight }} kg</span>
-      </div>
     </div>
   </div>
 
   <!-- IDLE: ready to start next set -->
   <div class="action-zone" *ngIf="phase === 'idle'">
+    <div class="hist-set" *ngIf="currentHistoricalSet">
+      <span class="hist-label">Dernier — Série {{ currentSetIndex + 1 }}</span>
+      <div class="hist-values">
+        <span class="hist-weight">{{ currentHistoricalSet.weight }} kg</span>
+        <span class="hist-sep">·</span>
+        <span>{{ currentHistoricalSet.reps }} reps</span>
+        <span class="hist-sep">·</span>
+        <span>{{ formatTime(currentHistoricalSet.durationSeconds) }}</span>
+      </div>
+    </div>
     <button class="btn-play" (click)="pressPlay()">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <polygon points="5 3 19 12 5 21 5 3"/>
@@ -82,6 +84,29 @@
         {{ countdownValue }}
       </div>
     </div>
+    <div class="set-inputs">
+      <div class="set-input-group">
+        <span class="set-input-label">Poids</span>
+        <div class="set-input-row">
+          <input type="number" class="set-input"
+                 [ngModel]="restingSetWeight"
+                 (ngModelChange)="restingSetWeight = $event"
+                 min="0" step="0.5" inputmode="decimal">
+          <span class="set-input-unit">kg</span>
+        </div>
+      </div>
+      <div class="set-input-group">
+        <span class="set-input-label">Reps</span>
+        <div class="set-input-row">
+          <input type="number" class="set-input"
+                 [ngModel]="restingSetReps"
+                 (ngModelChange)="restingSetReps = $event"
+                 min="0" step="1" inputmode="numeric">
+          <span class="set-input-unit">reps</span>
+        </div>
+      </div>
+    </div>
+    <p class="action-hint-small">Série {{ currentSetIndex }}</p>
     <p class="action-hint">Pause — série {{ currentSetIndex + 1 }} dans {{ formatTime(countdownValue) }}</p>
   </div>
 
@@ -100,6 +125,29 @@
         {{ countdownValue }}
       </div>
     </div>
+    <div class="set-inputs">
+      <div class="set-input-group">
+        <span class="set-input-label">Poids</span>
+        <div class="set-input-row">
+          <input type="number" class="set-input"
+                 [ngModel]="restingSetWeight"
+                 (ngModelChange)="restingSetWeight = $event"
+                 min="0" step="0.5" inputmode="decimal">
+          <span class="set-input-unit">kg</span>
+        </div>
+      </div>
+      <div class="set-input-group">
+        <span class="set-input-label">Reps</span>
+        <div class="set-input-row">
+          <input type="number" class="set-input"
+                 [ngModel]="restingSetReps"
+                 (ngModelChange)="restingSetReps = $event"
+                 min="0" step="1" inputmode="numeric">
+          <span class="set-input-unit">reps</span>
+        </div>
+      </div>
+    </div>
+    <p class="action-hint-small">Série {{ currentSetIndex }}</p>
     <p class="action-hint">Changement d'exercice dans {{ formatTime(countdownValue) }}</p>
     <p class="action-hint-sub" *ngIf="currentExerciseIndex + 1 < session.exercises.length">
       Prochain : {{ session.exercises[currentExerciseIndex + 1].name }}

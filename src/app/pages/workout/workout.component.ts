@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { AudioService } from '../../services/audio.service';
@@ -15,7 +16,7 @@ const CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 @Component({
   selector: 'app-workout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './workout.component.html',
   styleUrls: ['./workout.component.scss']
 })
@@ -31,6 +32,30 @@ export class WorkoutComponent implements OnInit, OnDestroy {
   exerciseLogs: ExerciseLog[] = [];
   currentSetLogs: SetLog[] = [];
   workoutStartTime = 0;
+  private historicalSets = new Map<string, SetLog[]>();
+
+  get currentHistoricalSet() {
+    return this.historicalSets.get(this.currentExercise?.id)
+      ?.find(s => s.setNumber === this.currentSetIndex + 1);
+  }
+
+  get restingSetWeight(): number {
+    return this.currentSetLogs[this.currentSetLogs.length - 1]?.weight ?? 0;
+  }
+  set restingSetWeight(value: number) {
+    if (this.currentSetLogs.length > 0) {
+      this.currentSetLogs[this.currentSetLogs.length - 1].weight = value;
+    }
+  }
+
+  get restingSetReps(): number {
+    return this.currentSetLogs[this.currentSetLogs.length - 1]?.reps ?? 0;
+  }
+  set restingSetReps(value: number) {
+    if (this.currentSetLogs.length > 0) {
+      this.currentSetLogs[this.currentSetLogs.length - 1].reps = value;
+    }
+  }
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -52,6 +77,16 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     }
     this.session = s;
     this.workoutStartTime = Date.now();
+
+    const allLogs = this.storage.getAllLogs();
+    const sessionLogs = allLogs.filter(l => l.sessionId === s.id);
+    if (sessionLogs.length > 0) {
+      const lastLog = sessionLogs.reduce((a, b) => a.date > b.date ? a : b);
+      for (const exLog of lastLog.exerciseLogs) {
+        this.historicalSets.set(exLog.exerciseId, exLog.sets);
+      }
+    }
+
     this.initExerciseLog(this.currentExerciseIndex);
   }
 
@@ -89,18 +124,26 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
   pressStop(): void {
     const durationSeconds = Math.round((Date.now() - this.setStartTime) / 1000);
-    this.currentSetLogs.push({ setNumber: this.currentSetIndex + 1, durationSeconds });
+    const completedSetNumber = this.currentSetIndex + 1;
+    const prev = this.currentSetLogs[this.currentSetLogs.length - 1];
+    const hist = prev === undefined
+      ? this.historicalSets.get(this.currentExercise.id)?.find(s => s.setNumber === completedSetNumber)
+      : undefined;
+    const prevWeight = prev?.weight ?? hist?.weight ?? 0;
+    const prevReps = prev?.reps ?? hist?.reps ?? 0;
+    this.currentSetLogs.push({ setNumber: completedSetNumber, durationSeconds, weight: prevWeight, reps: prevReps });
     this.currentSetIndex++;
     this.clearTimer();
 
     const allSetsForExerciseDone = this.currentSetIndex >= this.currentExercise.sets;
 
     if (allSetsForExerciseDone) {
-      this.finalizeExerciseLog();
       if (this.isLastExercise) {
+        this.finalizeExerciseLog();
         this.finishWorkout();
       } else {
         this.startCountdown(this.session.restBetweenExercises, () => {
+          this.finalizeExerciseLog();
           this.currentExerciseIndex++;
           this.currentSetIndex = 0;
           this.currentSetLogs = [];
@@ -166,7 +209,6 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     this.exerciseLogs[index] = {
       exerciseId: ex.id,
       exerciseName: ex.name,
-      weight: ex.weight,
       sets: [],
       averageDurationSeconds: 0
     };

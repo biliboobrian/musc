@@ -58,9 +58,6 @@
 }
 
 .ex-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 12px;
 }
 
@@ -102,6 +99,17 @@
 
 .set-label {
   color: #888;
+  font-size: 0.88rem;
+}
+
+.set-weight {
+  color: #ff8c00;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.set-reps {
+  color: #aaa;
   font-size: 0.88rem;
 }
 

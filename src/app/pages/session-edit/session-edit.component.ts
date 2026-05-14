@@ -48,9 +48,7 @@ export class SessionEditComponent implements OnInit {
     const exercise: Exercise = {
       id: this.storage.generateId(),
       name: '',
-      weight: 0,
       sets: 3,
-      reps: 10,
       restTime: 60
     };
     this.session.exercises.push(exercise);

@@ -110,8 +110,6 @@
 .ex-summary {}
 
 .ex-header {
-  display: flex;
-  justify-content: space-between;
   margin-bottom: 8px;
 }
 
@@ -119,11 +117,6 @@
   color: #e0e0e0;
   font-weight: 600;
   font-size: 0.95rem;
-}
-
-.ex-weight {
-  color: #ff8c00;
-  font-size: 0.88rem;
 }
 
 .sets-rows {
@@ -152,6 +145,17 @@
 
 .set-label {
   color: #888;
+  font-size: 0.82rem;
+}
+
+.set-weight {
+  color: #ff8c00;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.set-reps {
+  color: #aaa;
   font-size: 0.82rem;
 }
 

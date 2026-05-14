@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { Session } from '../../models/session.model';
+import { APP_VERSION } from '../../version';
 
 @Component({
   selector: 'app-session-list',
@@ -14,6 +15,7 @@ import { Session } from '../../models/session.model';
 export class SessionListComponent implements OnInit {
   sessions: Session[] = [];
   lastDuration = new Map<string, number>();
+  readonly appVersion = APP_VERSION;
 
   constructor(private storage: StorageService, private router: Router) {}
 

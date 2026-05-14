@@ -1,0 +1,12 @@
+@if (update.updateAvailable()) {
+  <div class="update-banner">
+    <div class="update-text">
+      <p class="update-title">Mise à jour disponible</p>
+      <p class="update-desc">Une nouvelle version est prête à installer.</p>
+    </div>
+    <div class="update-actions">
+      <button class="btn-later" (click)="update.dismiss()">Plus tard</button>
+      <button class="btn-update" (click)="update.applyUpdate()">Mettre à jour</button>
+    </div>
+  </div>
+}

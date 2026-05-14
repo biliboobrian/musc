@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../services/storage.service';
 import { AudioService } from '../../services/audio.service';
+import { WakeLockService } from '../../services/wake-lock.service';
 import { Session } from '../../models/session.model';
 import { Exercise } from '../../models/exercise.model';
 import { ExerciseLog, SetLog, WorkoutLog } from '../../models/workout-log.model';
@@ -65,7 +66,8 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private storage: StorageService,
     private audio: AudioService,
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private wakeLock: WakeLockService
   ) {}
 
   ngOnInit(): void {
@@ -88,10 +90,12 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     }
 
     this.initExerciseLog(this.currentExerciseIndex);
+    this.wakeLock.acquire();
   }
 
   ngOnDestroy(): void {
     this.clearTimer();
+    this.wakeLock.release();
   }
 
   get currentExercise(): Exercise {

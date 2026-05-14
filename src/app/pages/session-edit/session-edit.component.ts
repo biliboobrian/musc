@@ -18,7 +18,6 @@ export class SessionEditComponent implements OnInit {
   session: Session = {
     id: '',
     name: '',
-    restBetweenExercises: 90,
     exercises: []
   };
   isNew = true;

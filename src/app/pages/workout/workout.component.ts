@@ -142,7 +142,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
         this.finalizeExerciseLog();
         this.finishWorkout();
       } else {
-        this.startCountdown(this.session.restBetweenExercises, () => {
+        this.startCountdown(this.currentExercise.restTime, () => {
           this.finalizeExerciseLog();
           this.currentExerciseIndex++;
           this.currentSetIndex = 0;
